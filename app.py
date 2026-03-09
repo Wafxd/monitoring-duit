@@ -66,20 +66,29 @@ def tambah():
     uang_masuk = int(request.form.get('uang_masuk') or 0)
     uang_keluar = int(request.form.get('uang_keluar') or 0)
     
+    # Ambil saldo dari transaksi terakhir
     last_record = supabase.table('transaksi').select('*').order('id', desc=True).limit(1).execute()
     
     saldo_darurat = last_record.data[0]['saldo_darurat'] if last_record.data else 0
     saldo_reksadana = last_record.data[0]['saldo_reksadana'] if last_record.data else 0
 
-    if uang_masuk == 500000:
-        saldo_darurat += 300000
-        saldo_reksadana += 200000
+    # 1. Uang masuk selalu ditambahkan ke kas utama (Dana Darurat) terlebih dahulu
+    saldo_darurat += uang_masuk
+
+    # 2. Logika Uang Keluar: Pindah Aset vs Uang Hangus
+    keterangan_lower = keterangan.lower()
+    
+    if "reksa" in keterangan_lower or "invest" in keterangan_lower:
+        # PINDAH ASET: Saldo Darurat berkurang, Saldo Reksadana bertambah
+        saldo_darurat -= uang_keluar
+        saldo_reksadana += uang_keluar
     else:
-        saldo_darurat += uang_masuk
+        # UANG HANGUS (Belanja/Darurat sungguhan): Hanya Saldo Darurat yang berkurang
         saldo_darurat -= uang_keluar
 
     total_aset = saldo_darurat + saldo_reksadana
 
+    # Insert ke Supabase
     supabase.table('transaksi').insert({
         "tanggal": tanggal,
         "keterangan": keterangan,
