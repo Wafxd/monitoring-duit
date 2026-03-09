@@ -24,10 +24,10 @@ def login():
         password = request.form.get('password')
 
         # Hardcode Akun Admin & User (Bisa kamu ganti passwordnya)
-        if username == 'admin' and password == 'admin123':
+        if username == 'wafda' and password == 'wafda251203':
             session['role'] = 'admin'
             return redirect(url_for('index'))
-        elif username == 'tamu' and password == 'tamu123':
+        elif username == 'rara' and password == 'rara123':
             session['role'] = 'user'
             return redirect(url_for('index'))
         else:
