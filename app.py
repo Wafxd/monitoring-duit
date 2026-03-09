@@ -1,4 +1,5 @@
 import os
+from datetime import datetime # <--- Tambahkan ini di paling atas
 from flask import Flask, render_template, request, redirect, url_for
 from supabase import create_client, Client
 
@@ -31,6 +32,18 @@ def index():
     try:
         response = supabase.table('transaksi').select('*').order('id', desc=False).execute()
         data = response.data
+
+        # --- TAMBAHKAN BLOK INI UNTUK FORMAT TANGGAL ---
+        for row in data:
+            if row['tanggal']:
+                try:
+                    # Ubah '2026-03-06' jadi objek waktu, lalu format ulang ke '06 Mar 2026'
+                    dt = datetime.strptime(row['tanggal'], '%Y-%m-%d')
+                    row['tanggal'] = dt.strftime('%d %b %Y')
+                except ValueError:
+                    # Kalau formatnya kebetulan bukan tahun-bulan-tanggal, biarkan apa adanya
+                    pass
+        # ------------------------------------------------
 
         if data:
             last_record = data[-1]
