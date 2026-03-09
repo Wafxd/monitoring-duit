@@ -4,14 +4,14 @@ from supabase import create_client, Client
 
 app = Flask(__name__)
 
-# Mengambil konfigurasi Supabase (langsung untuk tes lokal)
-SUPABASE_URL = "https://pdvtavhylffcobqwfuhk.supabase.co"
-SUPABASE_KEY = "sb_publishable_c-Vvcb6IKZ9nASBhwqh5bg_CW6ebLkn"
+# Ini cara yang benar agar Vercel bisa membaca variabel rahasia
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
-# Inisialisasi client
-if SUPABASE_URL and SUPABASE_KEY:
+# Tambahkan try-except agar Vercel tidak langsung crash jika variabel belum diset
+try:
     supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-else:
+except Exception:
     supabase = None
 
 @app.route('/')
