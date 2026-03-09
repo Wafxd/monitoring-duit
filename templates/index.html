@@ -69,6 +69,26 @@
             color: var(--text-number); font-family: 'Poppins', sans-serif;
         }
         input[type="number"] { font-family: 'Space Grotesk', sans-serif; }
+        
+        /* --- PERBAIKAN INPUT DATE (DARK MODE) --- */
+        input[type="date"] {
+            color-scheme: dark; /* Memaksa kalender bawaan browser jadi gelap */
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-number);
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1); /* Mengubah ikon kalender hitam jadi putih */
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+        /* ---------------------------------------- */
+
         button {
             padding: 12px 24px; background-color: var(--text-number); color: var(--bg-color);
             border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
@@ -121,7 +141,7 @@
         
         <div class="form-container">
             <form class="form-grid" action="/tambah" method="POST">
-                <input type="date" name="tanggal" placeholder="Tgl (ex: 6 April 2026)" required>
+                <input type="date" name="tanggal" required>
                 <input type="text" name="keterangan" placeholder="Keterangan" required>
                 <input type="number" name="uang_masuk" placeholder="Uang Masuk (Rp)" value="0">
                 <input type="number" name="uang_keluar" placeholder="Uang Keluar (Rp)" value="0">
