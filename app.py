@@ -4,9 +4,9 @@ from supabase import create_client, Client
 
 app = Flask(__name__)
 
-# Mengambil konfigurasi Supabase dari Environment Variables Vercel
-SUPABASE_URL = os.environ.get("https://pdvtavhylffcobqwfuhk.supabase.co")
-SUPABASE_KEY = os.environ.get("sb_publishable_c-Vvcb6IKZ9nASBhwqh5bg_CW6ebLkn")
+# Mengambil konfigurasi Supabase (langsung untuk tes lokal)
+SUPABASE_URL = "https://pdvtavhylffcobqwfuhk.supabase.co"
+SUPABASE_KEY = "sb_publishable_c-Vvcb6IKZ9nASBhwqh5bg_CW6ebLkn"
 
 # Inisialisasi client
 if SUPABASE_URL and SUPABASE_KEY:
