@@ -141,11 +141,13 @@
         
         <div class="form-container">
             <form class="form-grid" action="/tambah" method="POST">
-                <input type="text" name="tanggal" placeholder="Tgl (ex: 6 April 2026)" onfocus="(this.type='date')" onblur="(this.value === '' ? this.type='text' : this.type='date')" required
-                >
+                <input type="text" name="tanggal" placeholder="Pilih Tanggal" onfocus="(this.type='date')" onblur="(this.value === '' ? this.type='text' : this.type='date')" required>
+                
                 <input type="text" name="keterangan" placeholder="Keterangan" required>
-                <input type="number" name="uang_masuk" placeholder="Uang Masuk (Rp)" value="0">
-                <input type="number" name="uang_keluar" placeholder="Uang Keluar (Rp)" value="0">
+                
+                <input type="number" name="uang_masuk" placeholder="Uang Masuk (Rp)">
+                <input type="number" name="uang_keluar" placeholder="Uang Keluar (Rp)">
+                
                 <div class="btn-submit-wrapper">
                     <button type="submit">Catat Transaksi</button>
                 </div>

@@ -37,11 +37,10 @@ def index():
         for row in data:
             if row['tanggal']:
                 try:
-                    # Ubah '2026-03-06' jadi objek waktu, lalu format ulang ke '06 Mar 2026'
+                    # Ubah '2026-03-06' jadi '06 Mar 2026'
                     dt = datetime.strptime(row['tanggal'], '%Y-%m-%d')
                     row['tanggal'] = dt.strftime('%d %b %Y')
                 except ValueError:
-                    # Kalau formatnya kebetulan bukan tahun-bulan-tanggal, biarkan apa adanya
                     pass
         # ------------------------------------------------
 
@@ -58,7 +57,7 @@ def index():
         return render_template('index.html', data=data, summary=summary)
     
     except Exception as e:
-        return f"BOCORAN ERROR: Gagal narik data tabel transaksi. Detail: {str(e)}", 500
+        return f"BOCORAN ERROR: Gagal narik data. Detail: {str(e)}", 500
 
 @app.route('/tambah', methods=['POST'])
 def tambah():
